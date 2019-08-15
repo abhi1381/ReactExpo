@@ -1,29 +1,24 @@
 import React, {
     Component
 } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
+import { Card, CardImg, CardText, CardBody,
     CardTitle } from 'reactstrap';
-import Menu from '../components/MenuComponent';
 
 class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-    }
 
-
-    renderComments(comments) {
-        console.log(comments);
-        if(comments != null) {
-            return comments.map((Comment) =>
-                (
-                    <div>
-                        <ul key = {Comment.id} className="list-unstyled"> 
-                            <li>{Comment.comment}</li>
-                            <li>-- {Comment.author} , {(new Date(Comment.date)).toDateString()}</li>
-                        </ul>
-                    </div>
-                )
-            );
+    renderDish(dish) {
+        // console.log(dish);
+        if(dish != null) {
+            return (
+                <Card>
+                    <CardImg top src={dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card> 
+                    
+                );
         } else {
             return (
                 <div></div>
@@ -32,24 +27,48 @@ class DishDetail extends Component {
     }
     
 
+
+
+    renderComments(dish) {
+        if(dish != null) {
+            let layoutComment = dish.comments.map((Comment) => {
+                return ( 
+                        <li key = {Comment.id} className="list-unstyled"> 
+                            <div>
+                                <p>{Comment.comment}</p>
+                                <p>-- {Comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(Comment.date)))}</p>
+                            </div>
+                        </li>
+                    
+                    )
+                }
+            );
+            return (
+                <ul>
+                    <h4>Comments</h4>
+                    {layoutComment}
+                </ul>
+            );
+        } else {
+            return (
+                <div></div>
+            )
+        }
+    }
+    
+
     render() {
-        
+        // console.log(this.props.dish[0]);
         return (
             <div className="container">
                 <div className="row">
-                    <div  className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-                            <CardBody>
-                                <CardTitle>{this.props.dish.name}</CardTitle>
-                                <CardText>{this.props.dish.description}</CardText>
-                             </CardBody>
-                         </Card>
+                    <div className="col-12 col-md-5 m-1">
+                        {this.renderDish(this.props.dish[0])}                    
                     </div>
+                    
                     <div  className="col-12 col-md-5 m-1">
-                        <h4>Comments</h4>
-                        {this.renderComments(this.props.dish.comments)}
-                    </div>
+                        {this.renderComments(this.props.dish[0])}                        
+                    </div>                        
                 </div>
             </div>
         );

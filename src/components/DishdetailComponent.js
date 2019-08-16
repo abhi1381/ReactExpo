@@ -74,8 +74,4 @@ import { Card, CardImg, CardText, CardBody,
 
         
     
-
-
-
-
 export default DishDetail;

@@ -3,12 +3,11 @@
 import React, {
     Component
   } from "react";
-  import {
-    Navbar,
-    NavbarBrand
-  } from "reactstrap";
+  
   import DishDetail from "./DishdetailComponent";
   import Menu from "./MenuComponent";
+  import Header from "./HeaderComponent";
+  import Footer from "./FooterComponent";
   import {
     DISHES
   } from '../shared/dishes';
@@ -31,13 +30,10 @@ import React, {
         // console.log(this.state.dishes);
       return (
         <div>
-          <Navbar dark color="dark">
-            <div className="container">
-              <NavbarBrand href="/">SweetFusion</NavbarBrand>
-            </div>
-          </Navbar>
+          <Header/>
           <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)}/>
           <DishDetail dish= {this.state.dishes.filter(dish => dish.id === this.state.selectedDish)}/>
+          <Footer/>
         </div>
       );
     }

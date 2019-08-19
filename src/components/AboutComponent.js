@@ -18,7 +18,7 @@ const listStyle = {
 }
 
 function RenderLeader({ leader }) {
-  console.log(leader[0].image);
+  // console.log(leader[0].image);
   return leader.map(lead => (
     <Media tag="li" style={listStyle}>
       <Media left>

@@ -15,9 +15,9 @@ import {
   Col,
   Label
 } from "reactstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, LocalForm, Errors} from "react-redux-form";
 import { Link } from "react-router-dom";
-import { Loading } from './LoadingComponent';
+import { Loading } from "./LoadingComponent";
 
 const required = val => val && val.length;
 const maxLength = len => val => !val || val.length <= len;
@@ -35,6 +35,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     console.log(values);
+    
     this.toggleModal();
     this.props.addComment(
       this.props.dishId,

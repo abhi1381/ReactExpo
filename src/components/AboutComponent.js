@@ -8,32 +8,55 @@ import {
   Media
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
+import { Fade, Stagger } from "react-animation-components";
 
 const imageStyle = {
-    margin: "0 40px 0 0"
+  margin: "0 40px 0 0"
 };
 
 const listStyle = {
-    marginBottom: "30px"
-}
+  marginBottom: "30px"
+};
 
 function RenderLeader({ leader }) {
   // console.log(leader[0].image);
   return leader.map(lead => (
-    <Media tag="li" style={listStyle}>
+    <Media key={lead.id} tag="li" style={listStyle}>
       <Media left>
-        <Media style = {imageStyle} object src= {lead.image} alt="Leader Image" />
+        <Media
+          style={imageStyle}
+          object
+          src={baseUrl + lead.image}
+          alt="Leader Image"
+        />
       </Media>
       <Media body>
-        <Media heading>
-          {lead.name}
-        </Media>
+        <Media heading>{lead.name}</Media>
         <p>{lead.designation}</p>
         {lead.description}
       </Media>
     </Media>
   ));
 }
+
+function RenderFinal({ leader, errMess, isLoading }) {
+  if (isLoading) {
+    return <Loading />;
+  } else if (errMess) {
+    return <h4>{errMess}</h4>;
+  } else {
+    return (
+      <Stagger in>
+        <Fade in>
+          <RenderLeader leader={leader} />
+        </Fade>
+      </Stagger>
+    );
+  }
+}
+
 function About(props) {
   return (
     <div className="container">
@@ -112,7 +135,11 @@ function About(props) {
         </div>
         <div className="col-12">
           <Media list>
-            <RenderLeader leader={props.leaders} />
+            <RenderFinal
+              leader={props.leaders.leaders}
+              isLoading={props.leaderLoading}
+              errMess={props.leaderErrMess}
+            />
           </Media>
         </div>
       </div>
